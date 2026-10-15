@@ -1,0 +1,9 @@
+# outputs written by the notebooks
+results_*/
+_cache_*/
+outcomes.txt
+
+# editor and Jupyter state
+.ipynb_checkpoints/
+__pycache__/
+.DS_Store
