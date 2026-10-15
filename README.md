@@ -94,5 +94,4 @@ The rotation angles in the notebooks are those run on hardware. They were produc
 That notebook also documents a factor of $\pi$ in the phase of the complementary
 polynomial that the angle extraction omits as written: including it gives an alternative
 angle set whose circuit reproduces the Fourier-truncated gate more closely, with a smaller
-phase error and a larger amplitude error. Every result in the paper is compared with the
-circuit actually run, so the claims do not depend on which set is used.
+phase error and a larger amplitude error.
