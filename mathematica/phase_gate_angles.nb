@@ -814,26 +814,10 @@ Cell[BoxData[{
 
 Cell["Layer stripping. Starting from P and Q, each step reads off the highest-order coefficients a1 (of P) and b1 (of Q), sets theta = ArcTan[|b1|/|a1|] and phi = Arg[a1/b1], and applies the inverse rotation, which lowers the degree of both polynomials by one. After M steps the remainder is a constant, whose phase gives the final lambda. angPra lists the angles in stripping order; angCD reverses them into circuit (time) order, with lambda on the first rotation. The last three lines rebuild the circuit from these angles, alternating rotations with the controlled displacement diag(w, 1), and keep its top-left element as Pfinal.", "Text"],
 
-Cell["Note on a factor of Pi in the next cell (as-run convention)", "Subsection"],
-
-Cell["The optimisation above parameterises the coefficients of Q as b_n = r_n Exp[I Pi xi_n]. The first line of the next cell, which rebuilds Q for the angle extraction (cq), uses Exp[I xi_n] instead, without the factor Pi. The angles stored in this notebook, and the angles run in the experiment for every gate, come from that line exactly as written.", "Text"],
-
-Cell["What the factor does. With Pi, cq is the complementary polynomial found by the optimisation, and the extracted circuit reproduces P, the Fourier-truncated gate of Section 1, up to the small residual cost of the optimisation. Without Pi, every phase of Q is scaled down by Pi, so Q is no longer exactly complementary to P. Every layer of the circuit is still a unitary rotation and the layer stripping still returns a valid circuit, but its top-left element (Pfinal, plotted in Section 4) is a slightly different order-M approximation of the target. Writing Exp[I Pi Last[...]] in cq gives the alternative angle set.", "Text"],
-
-Cell["How large the difference is. The operator-error notebook (07_operator_errors.ipynb) compares the as-run circuit with the Fourier-truncated gate, which the with-Pi circuit closely reproduces (SM, Compiled-circuit errors). Over the analysis windows of the paper (cubic |x| <= 1.8, double wells |x| <= 1.5, Morse |x| <= 1.6), relative to the with-Pi angles, the as-run angles:", "Text"],
-
-Cell["have a smaller amplitude error (rms of 1 - A_M about half as large, e.g. cubic 0.017 vs 0.041, Morse 0.029 vs 0.058), since the compiled gate is a matrix element of a unitary;", "Item"],
-
-Cell["have a larger phase error (rms up to 2-3 times larger, e.g. cubic 0.048 vs 0.025 rad, Morse 0.072 vs 0.028 rad), concentrated near the window edges;", "Item"],
-
-Cell["have essentially the same rms operator error |K_g - exp(-iV)| (0.015-0.076 vs 0.015-0.064), with a larger worst point (fidelity bound up to 3.5e-2 vs below 1e-2);", "Item"],
-
-Cell["keep the acceptance A_M^2 above 0.8 in every window, as the with-Pi angles do.", "Item"],
-
-Cell["Why it does not change the claims. The paper never compares the data with the ideal target alone: every comparison (Sim, the force curves, the acceptance, the fits and the operator-error budget) is made against the compiled operator rebuilt from the angles actually run, Pfinal here and K_g in the Python notebooks. The measured forces agree with that circuit, and both angle sets approximate the target potentials to the same overall accuracy. Including Pi would mainly trade a smaller phase error near the window edges for a larger amplitude error.", "Text"],
+Cell["Note: the line defining cq uses Exp[I xi] where the optimisation used Exp[I Pi xi]. The angles run in the experiment come from this line as written. Writing Exp[I Pi ...] instead gives a circuit closer to the Fourier-truncated gate: about half the phase error but about twice the amplitude error, with a similar overall operator error. Every result in the paper is compared with the circuit actually run, so the choice does not affect any claim.", "Text"],
 
 Cell[BoxData[{
- RowBox[{"(*", " ", "As run: the phase below is Exp[I xi_n], without the factor Pi used in the optimisation (b_n = r_n Exp[I Pi xi_n]). Writing Exp[I Pi Last[...]] gives the alternative angle set discussed in the text above. ", "*)"}], "\[IndentingNewLine]",  RowBox[{
+ RowBox[{"(*", " ", "As run: Exp[I xi] (see note above). ", "*)"}], "\[IndentingNewLine]",  RowBox[{
   RowBox[{"cq", "=", 
    RowBox[{"Table", "[", 
     RowBox[{
