@@ -17,6 +17,7 @@ The notebooks are numbered in the order their results appear in the paper.
 | `04_broken_double_well.ipynb` | broken double well $V=0.1X^4-0.3X^2+0.6X$, coherent probes | Fig. 3(a); SM *Double-well gates* |
 | `05_morse.ipynb` | Morse gate with position-compressed probes | Fig. 4; SM *Morse gate*, *Probe compression and bandwidth* |
 | `06_operator_errors.ipynb` | hardware-free errors of the compiled circuits | SM *Compiled-circuit errors* |
+| `repeated_cubic/state_reconstruction_v1.ipynb` | state reconstruction, fidelities, Wigner negativities | Cubic section in main text |
 | `mathematica/phase_gate_angles.nb` | QSP compiler: target phase → qubit rotation angles | SM *Rotation angles* |
 | `extract_outputs.py` | collects the `PAPER VALUES` blocks of the executed notebooks into one text file | — |
 
@@ -50,6 +51,7 @@ Each analysis notebook reads its raw data from the folder it sits in:
 | `03_asymmetric_double_well` | folder `tilted_double_well_multiple_sets/`: `calibrations.zip` and `tdw_<j>.zip` (three scans) |
 | `04_broken_double_well` | `broken_tdw.zip` |
 | `05_morse` | `squeezed_morse_10dB_0.zip` |
+| `repeated_cubic/state_reconstruction_v1` | `repeated_cubic/clean_data_reconstruction.zip` |
 
 Each archive holds, for every probe centre, the single-shot outcomes of the
 characteristic-function cut together with the post-selection record, plus the vacuum
@@ -76,6 +78,12 @@ python extract_outputs.py --run
 Each notebook writes its tables, figures and `paper_values.json` to its own `results_*/`
 folder. With 2000 bootstrap replicas a notebook takes a few minutes; lowering `N_BOOT` in
 section 1 gives a quick check.
+
+Running the state reconstruction, fidelities, and Wigner negativities for the cubic potential:
+1. The main script 'repeated_cubic/state_reconstruction_v1.ipynb' requires functions from 'TK_basics.py' (put this on the same folder).
+2. Run the 'q2_CF_map_gridbase_1mode.py' script to generate and save the map for reconstruction. The map will be recalled in 'state_reconstruction_v1.ipynb'.
+3. Ideal target states are stored as npz files in the 'repeated_cubic' folder and will be recalled in 'state_reconstruction_v1.ipynb'.
+4. When running 'state_reconstruction_v1.ipynb', choose the corresponding target state, load the map that was generated with 'q2_CF_map_gridbase_1mode.py', and load the corresponding data. The rest of the script will post process the data and output the fidelity with command 'print(f'FidelityBI is {Fmean} +- {Fstd}')', and Wigner negativity with command 'print(f'neg is {neg_mean} +- {neg_std}')'.
 
 ## Conventions
 
